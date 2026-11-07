@@ -8,8 +8,8 @@
   "dependencies": {
     "@capacitor/android": "^6.1.2",
     "@capacitor/core": "^6.1.2",
-    "@aparajita/capacitor-biometric-auth": "latest",
-    "@aparajita/capacitor-biometric-auth": "^6.1.0"
+    "@capacitor-community/privacy-screen": "^6.0.0",
+    "@aparajita/capacitor-biometric-auth": "latest"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
