@@ -1,0 +1,6 @@
+{
+  "appId": "com.bok.digital",
+  "appName": "BOK Digital",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
