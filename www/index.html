@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BK App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Naskh+Arabic:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#164176;--orange:#ee592f;--btn-login:#ee592f;--btn-reg:#0be5ff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0;background:#0b1020;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.app{position:relative;height:100%;max-width:440px;margin:0 auto;overflow:hidden;background:#fff}
+
+/* Logo (shared) */
+.logo{position:relative;display:inline-flex;align-items:center;justify-content:center;perspective:700px}
+.logo .text{font-family:"Archivo Black","Arial Black","Segoe UI Black",Impact,system-ui,sans-serif;font-size:96px;font-weight:900;letter-spacing:-8px;transform:translateX(-4px);color:var(--navy);-webkit-text-stroke:2px var(--navy);line-height:1}
+.logo .base{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff}
+.logo .spin{position:absolute;top:50%;left:50%;width:37px;height:37px;margin:-18.5px 0 0 -18.5px;border-radius:50%;background:var(--orange);animation:globe 2.4s linear infinite}
+@keyframes globe{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+
+/* Splash */
+#splash{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;transition:opacity .5s;z-index:5}
+#splash.hide{opacity:0;pointer-events:none}
+#splash .logo{transform:scale(.8)}
+
+/* Login */
+#login{position:absolute;inset:0;display:flex;flex-direction:column;padding:16px 20px 14px;color:#fff;background:linear-gradient(180deg,#0b3a8f 0%,#082a6b 45%,#051a45 100%)}
+.top{display:flex;align-items:center;justify-content:flex-end;gap:10px;font-size:16px;font-weight:600}
+.switch{width:54px;height:28px;border-radius:14px;background:#323d5d;position:relative;border:0;padding:0;cursor:pointer}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--btn-login);transition:transform .25s}
+.switch.ur::after{transform:translateX(26px)}
+.logo-area{flex:2.4;display:flex;align-items:center;justify-content:flex-start;padding:0 0 70px}
+.brand{display:flex;flex-direction:column;align-items:flex-start;line-height:1}
+.brand .b1{font-family:Poppins,system-ui,sans-serif;font-weight:600;font-size:30px;color:var(--orange);margin-left:22px;letter-spacing:.5px}
+.brand .b2{font-family:Poppins,system-ui,sans-serif;font-weight:600;font-size:52px;color:#fff;letter-spacing:-1px;margin-top:-2px}
+.brand .sub{display:flex;flex-direction:column;width:100%;margin-top:-2px}
+.brand .b3{align-self:flex-end;font-family:"Noto Naskh Arabic",system-ui,serif;font-weight:600;font-size:18px;color:#fff;line-height:1.35}
+.brand .b4{margin-top:6px;font-family:Poppins,system-ui,sans-serif;font-weight:600;font-size:13px;letter-spacing:.6px;color:#fff;line-height:1.35}
+.logo-card{background:#fff;border-radius:22px;padding:22px 30px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.logo-card .text{font-size:72px}
+.logo-card .base{width:33px;height:33px;margin:-16.5px 0 0 -16.5px}
+.logo-card .spin{width:28px;height:28px;margin:-14px 0 0 -14px}
+.row{display:flex;gap:10px;width:100%;margin:0 auto;position:relative;top:-10px}
+.btn{flex:1;height:47px;border:0;border-radius:6px;color:#fff;font-size:15.5px;font-weight:700;cursor:pointer}
+.btn.login{background:var(--btn-login)}
+.btn.reg{background:rgba(255,255,255,.1)}
+.gap{flex:.5;min-height:24px}
+.card{display:flex;align-items:center;height:54px;margin:0 auto 11px;padding:0 13px;border:0;width:100%;border-radius:8px;background:rgba(255,255,255,.12);color:#fff;font-size:16.5px;cursor:pointer}
+.card .ic{width:41px;display:flex;justify-content:center}
+.wa{position:relative}
+.wa svg{width:41px;height:41px;overflow:visible}
+.wa-rip,.wa-disc,.wa-dot,.wa-phone{transform-box:fill-box;transform-origin:center}
+.wa-rip{opacity:0;animation:warip 4.2s ease-out infinite}
+@keyframes warip{0%,60%{transform:scale(1);opacity:0}62%{opacity:.5}88%{transform:scale(1.4);opacity:0}100%{transform:scale(1.4);opacity:0}}
+.wa-disc{animation:wadisc 4.2s ease-out infinite}
+@keyframes wadisc{0%,28%{transform:scale(.5);opacity:0}38%{transform:scale(.62);opacity:.35}58%,80%{transform:scale(1);opacity:1}92%,100%{transform:scale(.5);opacity:0}}
+.wa-dot{animation:wadot 4.2s ease-out infinite}
+@keyframes wadot{0%,20%{transform:scale(0)}34%,80%{transform:scale(1)}92%,100%{transform:scale(0)}}
+.wa-ring{fill:none;stroke:#fff;stroke-width:4;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:100;animation:watrace 4.2s ease-in-out infinite}
+@keyframes watrace{0%{stroke-dashoffset:100}22%,92%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}
+.wa-phone{animation:waphone 4.2s ease-out infinite}
+@keyframes waphone{0%,52%{transform:scale(.3);opacity:0}64%,78%{transform:scale(1);opacity:1}88%,100%{transform:scale(.3);opacity:0}}
+.car-ic svg{width:41px;height:21px}
+.car-a,.car-b{animation:carmove 2.4s linear infinite}
+.car-b{animation-delay:-1.5s}
+@keyframes carmove{from{transform:translateX(-32px)}to{transform:translateX(62px)}}
+.wheel{transform-box:fill-box;transform-origin:center;animation:wheelspin .5s linear infinite}
+@keyframes wheelspin{to{transform:rotate(360deg)}}
+.road{animation:road .4s linear infinite}
+@keyframes road{to{stroke-dashoffset:8}}
+.card .lbl{flex:1;text-align:center;margin-right:41px}
+.contact{text-align:center;margin:10px 0 18px;font-size:18px}
+.contact span{text-decoration:underline;cursor:pointer}
+.ver{text-align:center;font-size:13px;opacity:.7}
+#signin{position:absolute;inset:0;z-index:4;container-type:inline-size;background:#2433c9;overflow:hidden;visibility:hidden;opacity:0;transition:opacity .4s ease,visibility 0s linear .6s}
+#signin.show{visibility:visible;opacity:1;transition-delay:0s}
+#signin .hero{position:absolute;left:0;right:0;top:0;height:33.7%;color:#fff;padding:12cqw 4.5cqw 0}
+#signin .orb{position:absolute;width:173.7cqw;height:173.7cqw;left:-81.2cqw;top:-39.9cqw;border-radius:50%;background:radial-gradient(circle at 60% 50%,#ff4f1f,#ee592f 65%);transform:scale(.3);transition:transform .6s ease}
+#signin.show .orb{transform:scale(1)}
+#signin .brand{width:max-content;transform:scale(.65);transform-origin:0 0;transition:transform .6s cubic-bezier(.2,.8,.2,1) .05s}
+#signin.show .brand{transform:scale(1)}
+#signin .hero>*{position:relative}
+#signin .brand .b1{color:#fff;font-size:7.2cqw;margin-left:3.2cqw;line-height:1}
+#signin .brand .b2{color:#fff;font-size:10cqw;letter-spacing:-.15cqw;margin-top:-.4cqw;line-height:1}
+#signin .brand .sub{margin-top:.6cqw;width:100%}
+#signin .brand .b3{display:block;align-self:flex-end;color:#fff;white-space:nowrap;font-size:4cqw;line-height:1.3}
+#signin .brand .b4{display:block;color:#fff;font-size:3cqw;letter-spacing:.6px;margin-top:1.2cqw;line-height:1.35}
+#signin .tag{font-family:Poppins,system-ui,sans-serif;font-weight:400;font-size:5.4cqw;line-height:1.32;margin-top:5cqw}
+#signin .back{position:absolute;left:2.4cqw;bottom:1.6cqw;width:6cqw;height:6cqw;padding:0;border:0;background:none;cursor:pointer}
+#signin .back svg{width:100%;height:100%}
+#signin .form{position:absolute;left:0;right:0;bottom:0;top:33.7%;padding:8cqw 6cqw 0;color:#1c2748;overflow:auto;background:linear-gradient(180deg,rgba(196,195,234,.8) 0%,rgba(154,163,207,.8) 35%,rgba(78,99,163,.8) 100%);transform:translateY(100%);transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+#signin.show .form{transform:translateY(0)}
+#signin label{display:block;font-size:3.6cqw;margin:0 0 1.7cqw}
+#signin .field{position:relative;margin-bottom:5.5cqw}
+#signin input{width:100%;height:13.5cqw;border:0;border-radius:2.6cqw;background:rgba(255,255,255,.72);padding:0 12cqw 0 4.6cqw;font-size:3.7cqw;color:#1d2840;outline:none}
+#signin input::placeholder{color:#6f7a93}
+#signin .eye{position:absolute;right:3cqw;top:50%;width:7cqw;height:7cqw;margin-top:-3.5cqw;padding:0;border:0;background:none;cursor:pointer}
+#signin .eye svg{width:100%;height:100%}
+#signin .go{width:100%;height:15.6cqw;margin-top:1.3cqw;border:0;border-radius:2cqw;background:var(--orange);color:#fff;font-size:4cqw;font-weight:400;cursor:pointer}
+#signin .fp{display:flex;justify-content:center;margin-top:7cqw}
+#signin .fp svg{width:7.5cqw;height:7.5cqw;stroke:#2d4396}
+#signin .forgot{margin-top:12cqw;font-size:3.2cqw;color:rgba(255,255,255,.85)}
+/* Home */
+#home{position:absolute;inset:0;z-index:6;container-type:inline-size;visibility:hidden;opacity:0;transform:translateY(3%);transition:opacity .35s ease,transform .35s ease,visibility 0s linear .35s;background:linear-gradient(180deg,#f4f3fa 0%,#e7eaf6 100%);color:#1c2030;font-family:Poppins,system-ui,sans-serif;overflow:hidden}
+#home.show{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+#home button{font-family:inherit;cursor:pointer}
+#home .hm-scroll{position:absolute;inset:0 0 17.5cqw 0;overflow:auto;padding:6cqw 5cqw 30cqw}
+#home .hm-head{display:flex;align-items:center;justify-content:space-between}
+#home h1{margin:0;font-size:5.6cqw;font-weight:600;color:#1f2140}
+#home .power{width:7cqw;height:7cqw;padding:0;border:0;background:none}
+#home .power svg,#home .refresh svg,#home .share svg,#home .hm-up svg{width:100%;height:100%}
+#home .hm-last{margin-top:3cqw;font-size:max(11px,2.7cqw);color:#4b4f66}
+#home .hm-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6cqw;margin-top:6cqw}
+#home .tile{height:23cqw;border-radius:4.5cqw;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.55);box-shadow:0 1.2cqw 3cqw rgba(70,70,130,.14);display:flex;flex-direction:column;align-items:center;padding:4.4cqw 1cqw 0;font-size:max(9px,2.3cqw);line-height:1.25;text-align:center;color:#1f2140}
+#home .tile svg{width:7.5cqw;height:7.5cqw;margin-bottom:3.3cqw;flex:none}
+#home .acct{position:relative;margin-top:8cqw;background:rgba(255,255,255,.78);border-radius:5cqw;box-shadow:0 1.5cqw 4cqw rgba(70,70,130,.14);padding:3.8cqw 5cqw 4.5cqw}
+#home .acct-top{display:flex;align-items:center}
+#home .pill{height:8.3cqw;padding:0 4cqw;border:1.5px solid #1f2140;border-radius:99px;background:none;font-size:max(12px,3.3cqw);color:#1f2140}
+#home .refresh{width:7cqw;height:7cqw;margin-left:2.6cqw;padding:0;border:0;background:none}
+#home .myqr{position:absolute;top:3.8cqw;right:5cqw;display:flex;flex-direction:column;align-items:center;font-size:max(9px,2.3cqw);color:#3b3f58}
+#home .myqr svg{width:5cqw;height:5cqw}
+#home .balblock{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+#home .balblock.on{grid-template-rows:1fr}
+#home .balin{overflow:hidden;min-height:0;opacity:0;transform:translateY(-1.5cqw);transition:opacity .3s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+#home .balblock.on .balin{opacity:1;transform:none;transition-delay:.08s,0s}
+#home .balgap{height:4.5cqw}
+#home .lbl.first{margin-top:0}
+#home .amt{margin-top:1.4cqw;font-size:7.6cqw;font-weight:600;line-height:1.1;color:#1c2030}
+#home .amt sup{font-size:2.7cqw;font-weight:400;margin-left:1.2cqw;vertical-align:top;position:relative;top:.8cqw}
+#home .lbl{margin-top:2.2cqw;font-size:max(10px,2.7cqw);color:#6b6f85}
+#home .val{margin-top:.8cqw;font-size:max(12px,3.5cqw);color:#1c2030;letter-spacing:.2px}
+#home .iban{margin-top:.6cqw;font-size:max(10px,2.8cqw);color:#1c2030}
+#home .acct-bottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:2cqw}
+#home .statement{height:8.2cqw;padding:0 5.6cqw;border:0;border-radius:99px;background:#2a2f9b;color:#fff;font-size:max(11px,3cqw);font-weight:600}
+#home .share{width:11cqw;height:11cqw;padding:2.8cqw;border:0;border-radius:50%;background:#eceef9}
+#home .hm-up{position:absolute;left:50%;bottom:24cqw;width:17cqw;height:17cqw;margin-left:-8.5cqw;padding:5cqw;border:0;border-radius:4.5cqw;background:rgba(255,255,255,.72);box-shadow:0 1.2cqw 3cqw rgba(70,70,130,.16)}
+#home .hm-nav{position:absolute;left:0;right:0;bottom:0;height:17.5cqw;background:#fff;box-shadow:0 -1px 8px rgba(60,60,120,.12);display:grid;grid-template-columns:repeat(5,1fr)}
+#home .nv{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8cqw;border:0;background:none;font-size:max(10px,2.6cqw);color:#4b4f66}
+#home .nv svg{width:7cqw;height:7cqw}
+#home .nv.on{color:#1c2030;font-weight:600;font-size:max(12px,3.4cqw)}
+/* Login loader overlay */
+#ovl{position:absolute;inset:0;z-index:7;background:rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .3s ease,visibility 0s linear .3s}
+#ovl.show{visibility:visible;opacity:1;transition-delay:0s}
+#ovl .logo{transform:scale(.8)}
+[dir=rtl]{unicode-bidi:plaintext}
+</style>
+</head>
+<body>
+<!-- Capacitor runtime (only present once built as an app; harmless as a plain web page) -->
+<script src="capacitor.js"></script>
+<script src="plugins.js"></script>
+<div class="app">
+
+  <div id="splash">
+    <div class="logo"><div class="text">BK</div><div class="base"></div><div class="spin"></div></div>
+  </div>
+
+  <div id="login">
+    <div class="top">
+      <span>English</span>
+      <button class="switch" id="sw" aria-label="Language"></button>
+      <span>اردو</span>
+    </div>
+
+    <div class="logo-area"><div class="brand"><div class="b1">BOK</div><div class="b2">Digital</div><div class="sub"><div class="b3" dir="rtl">ہر جگہ، ہر پل</div><div class="b4">anywhere,<br>anytime</div></div></div></div>
+
+    <div class="row">
+      <button class="btn login" data-k="login">Login</button>
+      <button class="btn reg" data-k="reg">Register</button>
+    </div>
+
+    <div class="gap"></div>
+
+    <button class="card">
+      <span class="ic wa"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="wa-all"><circle class="wa-rip" cx="50" cy="50" r="46" fill="#25d366"/><circle class="wa-disc" cx="50" cy="50" r="46" fill="#25d366"/><circle class="wa-dot" cx="50" cy="50" r="19" fill="#25d366"/><path class="wa-ring" pathLength="100" d="M45.8 73.6L27 78L33 67A24 24 0 1 1 45.8 73.6Z"/><g transform="translate(36.7 36.7) scale(1.1)"><path class="wa-phone" fill="#fff" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></g></g></svg></span>
+      <span class="lbl" data-k="wa">Whatsapp Banking</span>
+    </button>
+    <button class="card">
+      <span class="ic car-ic"><svg viewBox="0 0 46 24" aria-hidden="true"><g transform="translate(0 4) scale(.8)"><g class="car-a"><path d="M3 12l3-6h14l4 5h3v4H3z" fill="#fff"/><g class="wheel"><circle cx="9" cy="15" r="2.6" fill="#fff" stroke="#2f7bff"/><path d="M9 12.9v4.2" stroke="#2f7bff"/></g><g class="wheel"><circle cx="21" cy="15" r="2.6" fill="#fff" stroke="#2f7bff"/><path d="M21 12.9v4.2" stroke="#2f7bff"/></g></g><g class="car-b"><path d="M3 15V5.5h14l1.2 4.5H27v5z" fill="#fff"/><path d="M5 7h10.2l.7 3H5z" fill="#2f7bff"/><circle cx="2.6" cy="10.5" r="2.2" fill="#fff" stroke="#2f7bff"/><g class="wheel"><circle cx="8" cy="15.2" r="3" fill="#fff" stroke="#2f7bff"/><path d="M8 12.6v5.2" stroke="#2f7bff"/></g><g class="wheel"><circle cx="22" cy="15.2" r="3" fill="#fff" stroke="#2f7bff"/><path d="M22 12.6v5.2" stroke="#2f7bff"/></g></g></g></svg></span>
+      <span class="lbl" data-k="auto">Auto Financing</span>
+    </button>
+
+    <div class="contact"><span data-k="contact">Contact Us</span></div>
+    <div class="ver">12.3.0</div>
+  </div>
+
+  <div id="signin">
+    <div class="orb"></div>
+    <div class="hero">
+      <div class="brand"><div class="b1">BOK</div><div class="b2">Digital</div><div class="sub"><div class="b3" dir="rtl">ہر جگہ، ہر پل</div><div class="b4">anywhere,<br>anytime</div></div></div>
+      <button class="back" id="back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    </div>
+    <div class="form">
+      <label for="un">Username</label>
+      <div class="field"><input id="un" type="text" placeholder="Enter username" autocomplete="off"></div>
+      <label for="pw">Password</label>
+      <div class="field"><input id="pw" type="password" placeholder="Enter password" autocomplete="off"><button class="eye" id="eye" aria-label="Show password"><svg viewBox="0 0 24 24"><path d="M12 5C7 5 3 9 1.5 12 3 15 7 19 12 19s9-4 10.5-7C21 9 17 5 12 5Z" fill="#2b3a55"/><circle cx="12" cy="12" r="3.2" fill="#fff"/></svg></button></div>
+      <button class="go">Login</button>
+      <div class="fp" id="bio" role="button" aria-label="Fingerprint login" style="cursor:pointer"><svg width="52" height="52" viewBox="0 0 48 48" fill="none" stroke="#1f3a7a" stroke-width="2.6" stroke-linecap="round"><path d="M10 20c2-8 8-12 14-12s12 4 14 12"/><path d="M14 22c1.5-5 5.5-8 10-8s8.5 3 10 8"/><path d="M18 24c1-3 3-5 6-5s5 2 6 5"/><path d="M24 26v6c0 4-1 7-3 10"/><path d="M18 28v4c0 5-2 8-4 10"/><path d="M30 28v6c0 4-1 6-2 8"/><path d="M12 26v6c0 3-1 5-2 7"/><path d="M36 26v5c0 3 0 5-1 8"/></svg></div>
+      <div class="forgot">Forgot Username or Password?</div>
+    </div>
+  </div>
+
+  <div id="home">
+    <div class="hm-scroll" id="hmscroll">
+      <div class="hm-head"><h1>Welcome Back</h1>
+        <button class="power" id="power" aria-label="Logout"><svg viewBox="0 0 24 24" fill="none" stroke="#d3212d" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.3 6.6a8 8 0 1 0 11.4 0"/></svg></button>
+      </div>
+      <div class="hm-last">Last Visit&nbsp; <span id="lastv"></span></div>
+
+      <div class="hm-tiles">
+        <button class="tile"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 7.5a6.5 6.5 0 1 0 0 9" stroke="#d3212d"/><path d="M11 13l8-8M14 5h5v5" stroke="#2f3fae"/></svg>Raast Payments</button>
+        <button class="tile"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h15M15 4l4 4-4 4" stroke="#d3212d"/><path d="M20 16H5M9 12l-4 4 4 4" stroke="#2f3fae"/></svg>Funds Transfer</button>
+        <button class="tile"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z" fill="#d3212d"/><circle cx="17" cy="17" r="4.8" fill="#2f3fae" stroke="#fff" stroke-width="1.2"/><path d="M15 17l1.6 1.6L19.2 15.4" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>Bill Management</button>
+        <button class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#2f3fae" stroke-width="2.6" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg>Add<br>Shortcut</button>
+      </div>
+
+      <div class="acct">
+        <div class="balblock" id="bal"><div class="balin"><div class="lbl first">Account Balance</div><div class="amt"><span id="amt">0.00</span><sup>Rs</sup></div><div class="balgap"></div></div></div>
+        <div class="acct-top">
+          <button class="pill" id="showbal">Show Balance</button>
+          <button class="refresh" aria-label="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="#1f2140" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v5h-5"/></svg></button>
+          <div class="myqr"><svg viewBox="0 0 24 24" fill="none" stroke="#1f2140" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM18.5 18.5H21V21h-2.5z" fill="#1f2140"/></svg>My QR</div>
+        </div>
+        <div class="lbl">Account Title</div><div class="val" id="d-title"></div>
+        <div class="lbl">Branch Name</div><div class="val" id="d-branch"></div>
+        <div class="lbl">Account Number</div><div class="val" id="d-acct"></div><div class="iban" id="d-iban"></div>
+        <div class="acct-bottom">
+          <button class="statement">Statement</button>
+          <button class="share" aria-label="Share"><svg viewBox="0 0 24 24" fill="#1f2140" stroke="#1f2140" stroke-width="1.6" stroke-linecap="round"><circle cx="18" cy="5" r="2.8"/><circle cx="6" cy="12" r="2.8"/><circle cx="18" cy="19" r="2.8"/><path d="M8.5 10.7l7-4.1M8.5 13.3l7 4.1" fill="none"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <button class="hm-up" id="hmup" aria-label="Top"><svg viewBox="0 0 24 24" fill="none" stroke="#1f2140" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+    <div class="hm-nav">
+      <button class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1f2140"/><circle cx="7.5" cy="12" r="1.7" fill="#fff"/><circle cx="12" cy="12" r="1.7" fill="#fff"/><circle cx="16.5" cy="12" r="1.7" fill="#fff"/></svg>Menu</button>
+      <button class="nv"><svg viewBox="0 0 24 24" fill="#1f2140"><circle cx="12" cy="8" r="4.2"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg>Profile</button>
+      <button class="nv on"><svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-4.5v-6h-3v6H6v-9H3z" fill="#d3212d"/></svg>Home</button>
+      <button class="nv"><svg viewBox="0 0 24 24" fill="none" stroke="#1f2140" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM18.5 18.5H21V21h-2.5z" fill="#1f2140"/></svg>Scan</button>
+      <button class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1f2140"/><path d="M12 6.5c-2.4 0-4 1.8-4 4.2V13l-1.2 1.8h10.4L16 13v-2.3c0-2.4-1.6-4.2-4-4.2z" fill="#fff"/><circle cx="12" cy="17.2" r="1.5" fill="#fff"/></svg>Alerts</button>
+    </div>
+  </div>
+
+  <div id="ovl"><div class="logo"><div class="text">BK</div><div class="base"></div><div class="spin"></div></div></div>
+
+</div>
+
+<script>
+var T={en:{login:"Login",reg:"Register",wa:"Whatsapp Banking",auto:"Auto Financing",contact:"Contact Us"},
+       ur:{login:"لاگ ان",reg:"رجسٹر",wa:"واٹس ایپ بینکنگ",auto:"آٹو فنانسنگ",contact:"ہم سے رابطہ کریں"}};
+var si=document.getElementById("signin");
+document.querySelector(".btn.login").addEventListener("click",function(){si.classList.add("show")});
+document.getElementById("back").addEventListener("click",function(){si.classList.remove("show")});
+document.getElementById("eye").addEventListener("click",function(){var p=document.getElementById("pw");p.type=p.type==="password"?"text":"password"});
+/* Account details - yahan apni details likh dein */
+var DATA={balance:"24358790",title:"MUHAMMAD ASJID",branch:"IBW -Charsadda road",account:"3006049183",iban:"PK21KHYB5074003006049183"};
+document.getElementById("amt").textContent=DATA.balance;
+document.getElementById("d-title").textContent=DATA.title;
+document.getElementById("d-branch").textContent=DATA.branch;
+document.getElementById("d-acct").textContent=DATA.account;
+document.getElementById("d-iban").textContent=DATA.iban;
+function fmtNow(){var d=new Date(),m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],h=d.getHours(),ap=h>=12?"PM":"AM";h=h%12||12;
+  return m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+("0"+h).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+" "+ap}
+var home=document.getElementById("home");
+var LOADER_MS=3000; /* login ke baad loader kitni der chale (milliseconds) */
+var ovl=document.getElementById("ovl"),ovlT;
+function doLogin(bio){var u=document.getElementById("un"),p=document.getElementById("pw");
+  if(bio!==true){
+    if(!u.value.trim()){u.focus();return}
+    if(!p.value){p.focus();return}
+  }
+  if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
+  document.getElementById("lastv").textContent=fmtNow();
+  home.classList.add("show");
+  ovl.classList.add("show");
+  clearTimeout(ovlT);
+  ovlT=setTimeout(function(){ovl.classList.remove("show")},LOADER_MS);
+}
+document.getElementById("bio").addEventListener("click",bioLogin);
+document.querySelector("#signin .go").addEventListener("click",function(){doLogin()});
+document.getElementById("pw").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin()});
+document.getElementById("power").addEventListener("click",function(){
+  home.classList.remove("show");si.classList.remove("show");
+  document.getElementById("un").value="";var p=document.getElementById("pw");p.value="";p.type="password";
+});
+document.getElementById("showbal").addEventListener("click",function(){
+  var b=document.getElementById("bal"),on=b.classList.toggle("on");this.textContent=on?"Hide Balance":"Show Balance";
+});
+document.getElementById("hmup").addEventListener("click",function(){document.getElementById("hmscroll").scrollTo({top:0,behavior:"smooth"})});
+/* ---- Native: screenshot block + fingerprint (only runs inside the built app) ---- */
+var Native = (window.Capacitor && window.Capacitor.Plugins) ? window.Capacitor.Plugins : null;
+if (Native && Native.PrivacyScreen) {
+  Native.PrivacyScreen.enable().catch(function(){});
+}
+async function bioLogin(){
+  if (!Native || !Native.BiometricAuth) { doLogin(true); return; } // preview fallback
+  try{
+    await Native.BiometricAuth.authenticate({ reason: "Login to BOK Digital" });
+    doLogin(true);
+  }catch(e){ /* user cancelled or failed - stay on sign-in */ }
+}
+document.getElementById("bio").removeEventListener && document.getElementById("bio");
+var sw=document.getElementById("sw");
+sw.addEventListener("click",function(){
+  var ur=sw.classList.toggle("ur"),L=ur?T.ur:T.en;
+  document.querySelectorAll("[data-k]").forEach(function(el){
+    el.textContent=L[el.getAttribute("data-k")];
+    if(ur){el.setAttribute("dir","rtl")}else{el.removeAttribute("dir")}
+  });
+});
+setTimeout(function(){document.getElementById("splash").classList.add("hide")},3000);
+</script>
+</body>
+</html>
