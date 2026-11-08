@@ -306,11 +306,13 @@ if (Native && Native.PrivacyScreen) {
   Native.PrivacyScreen.enable().catch(function(){});
 }
 async function bioLogin(){
+  /* TEMP DIAGNOSTIC - batata hai ke phone par asal fingerprint plugin mila ya nahi */
+  alert("Capacitor: "+(!!window.Capacitor)+"\nPlugins: "+(window.Capacitor?Object.keys(window.Capacitor.Plugins||{}).join(","):"none"));
   if (!Native || !Native.BiometricAuth) { doLogin(true); return; } // preview fallback
   try{
     await Native.BiometricAuth.authenticate({ reason: "Login to BOK Digital" });
     doLogin(true);
-  }catch(e){ /* user cancelled or failed - stay on sign-in */ }
+  }catch(e){ alert("Biometric error: "+(e&&e.message?e.message:e)); }
 }
 document.getElementById("bio").removeEventListener && document.getElementById("bio");
 var sw=document.getElementById("sw");
