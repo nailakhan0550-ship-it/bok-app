@@ -306,13 +306,20 @@ if (Native && Native.PrivacyScreen) {
   Native.PrivacyScreen.enable().catch(function(){});
 }
 async function bioLogin(){
-  /* TEMP DIAGNOSTIC - batata hai ke phone par asal fingerprint plugin mila ya nahi */
-  alert("Capacitor: "+(!!window.Capacitor)+"\nPlugins: "+(window.Capacitor?Object.keys(window.Capacitor.Plugins||{}).join(","):"none"));
   if (!Native || !Native.BiometricAuth) { doLogin(true); return; } // preview fallback
   try{
-    await Native.BiometricAuth.authenticate({ reason: "Login to BOK Digital" });
+    alert("Calling authenticate...");
+    await Native.BiometricAuth.authenticate({
+      reason: "Login to BOK Digital",
+      cancelTitle: "Cancel",
+      allowDeviceCredential: false,
+      androidTitle: "Biometric login",
+      androidSubtitle: "Log in using biometric authentication",
+      androidConfirmationRequired: false
+    });
+    alert("Authenticate RESOLVED (success)");
     doLogin(true);
-  }catch(e){ alert("Biometric error: "+(e&&e.message?e.message:e)); }
+  }catch(e){ alert("Biometric error/cancel: "+(e&&e.message?e.message:JSON.stringify(e))); }
 }
 document.getElementById("bio").removeEventListener && document.getElementById("bio");
 var sw=document.getElementById("sw");
