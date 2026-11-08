@@ -199,6 +199,7 @@ html,body{height:100%;margin:0;background:#0b1020;font-family:system-ui,-apple-s
       <div class="field"><input id="pw" type="password" placeholder="Enter password" autocomplete="off"><button class="eye" id="eye" aria-label="Show password"><svg viewBox="0 0 24 24"><path d="M12 5C7 5 3 9 1.5 12 3 15 7 19 12 19s9-4 10.5-7C21 9 17 5 12 5Z" fill="#2b3a55"/><circle cx="12" cy="12" r="3.2" fill="#fff"/></svg></button></div>
       <button class="go">Login</button>
       <div class="fp" id="bio" role="button" aria-label="Fingerprint login" style="cursor:pointer"><svg width="52" height="52" viewBox="0 0 48 48" fill="none" stroke="#1f3a7a" stroke-width="2.6" stroke-linecap="round"><path d="M10 20c2-8 8-12 14-12s12 4 14 12"/><path d="M14 22c1.5-5 5.5-8 10-8s8.5 3 10 8"/><path d="M18 24c1-3 3-5 6-5s5 2 6 5"/><path d="M24 26v6c0 4-1 7-3 10"/><path d="M18 28v4c0 5-2 8-4 10"/><path d="M30 28v6c0 4-1 6-2 8"/><path d="M12 26v6c0 3-1 5-2 7"/><path d="M36 26v5c0 3 0 5-1 8"/></svg></div>
+      <div id="signinErr" style="display:none;margin-top:14px;color:#ff5a5a;font-size:14px;text-align:center"></div>
       <div class="forgot">Forgot Username or Password?</div>
     </div>
   </div>
@@ -267,11 +268,17 @@ function fmtNow(){var d=new Date(),m=["Jan","Feb","Mar","Apr","May","Jun","Jul",
   return m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+("0"+h).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+" "+ap}
 var home=document.getElementById("home");
 var LOADER_MS=3000; /* login ke baad loader kitni der chale (milliseconds) */
+var VALID_USER="Muhammad Asjid", VALID_PASS="0900090"; /* yahan apna username/password rakhein */
 var ovl=document.getElementById("ovl"),ovlT;
+var errEl=document.getElementById("signinErr");
+function showErr(msg){errEl.textContent=msg;errEl.style.display="block"}
+function clearErr(){errEl.style.display="none"}
 function doLogin(bio){var u=document.getElementById("un"),p=document.getElementById("pw");
   if(bio!==true){
+    clearErr();
     if(!u.value.trim()){u.focus();return}
     if(!p.value){p.focus();return}
+    if(u.value.trim()!==VALID_USER || p.value!==VALID_PASS){showErr("Incorrect username or password");return}
   }
   if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
   document.getElementById("lastv").textContent=fmtNow();
@@ -281,6 +288,8 @@ function doLogin(bio){var u=document.getElementById("un"),p=document.getElementB
   ovlT=setTimeout(function(){ovl.classList.remove("show")},LOADER_MS);
 }
 document.getElementById("bio").addEventListener("click",bioLogin);
+document.getElementById("un").addEventListener("input",clearErr);
+document.getElementById("pw").addEventListener("input",clearErr);
 document.querySelector("#signin .go").addEventListener("click",function(){doLogin()});
 document.getElementById("pw").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin()});
 document.getElementById("power").addEventListener("click",function(){
