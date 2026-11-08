@@ -306,10 +306,10 @@ if (Native && Native.PrivacyScreen) {
   Native.PrivacyScreen.enable().catch(function(){});
 }
 async function bioLogin(){
-  var plugins = (window.Capacitor && window.Capacitor.Plugins) ? window.Capacitor.Plugins : null; // check fresh, not cached at page load
-  if (!plugins || !plugins.BiometricAuth) { alert("No biometric plugin found at click time"); doLogin(true); return; } // preview fallback
+  if (!window.Capacitor || !window.Capacitor.isNativePlatform || !window.Capacitor.isNativePlatform()) { doLogin(true); return; } // preview fallback (not inside the built app)
   try{
-    await plugins.BiometricAuth.authenticate({
+    var BiometricAuth = (window.Capacitor.Plugins && window.Capacitor.Plugins.BiometricAuth) || window.Capacitor.registerPlugin("BiometricAuth");
+    await BiometricAuth.authenticate({
       reason: "Login to BOK Digital",
       cancelTitle: "Cancel",
       allowDeviceCredential: false,
