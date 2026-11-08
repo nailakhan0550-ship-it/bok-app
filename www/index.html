@@ -306,10 +306,10 @@ if (Native && Native.PrivacyScreen) {
   Native.PrivacyScreen.enable().catch(function(){});
 }
 async function bioLogin(){
-  if (!Native || !Native.BiometricAuth) { doLogin(true); return; } // preview fallback
+  var plugins = (window.Capacitor && window.Capacitor.Plugins) ? window.Capacitor.Plugins : null; // check fresh, not cached at page load
+  if (!plugins || !plugins.BiometricAuth) { alert("No biometric plugin found at click time"); doLogin(true); return; } // preview fallback
   try{
-    alert("Calling authenticate...");
-    await Native.BiometricAuth.authenticate({
+    await plugins.BiometricAuth.authenticate({
       reason: "Login to BOK Digital",
       cancelTitle: "Cancel",
       allowDeviceCredential: false,
@@ -317,7 +317,6 @@ async function bioLogin(){
       androidSubtitle: "Log in using biometric authentication",
       androidConfirmationRequired: false
     });
-    alert("Authenticate RESOLVED (success)");
     doLogin(true);
   }catch(e){ alert("Biometric error/cancel: "+(e&&e.message?e.message:JSON.stringify(e))); }
 }
