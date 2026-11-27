@@ -14,10 +14,11 @@ html,body{height:100%;margin:0;background:#0b1020;font-family:system-ui,-apple-s
 .app{position:relative;height:100%;max-width:440px;margin:0 auto;overflow:hidden;background:#fff}
 
 /* Logo (shared) */
-.logo{position:relative;display:inline-flex;align-items:center;justify-content:center;perspective:700px}
+.logo{position:relative;display:inline-flex;align-items:center;justify-content:center;perspective:700px;transform:scale(.18)}
 .logo .text{font-family:"Archivo Black","Arial Black","Segoe UI Black",Impact,system-ui,sans-serif;font-size:96px;font-weight:900;letter-spacing:-8px;transform:translateX(-4px);color:var(--navy);-webkit-text-stroke:2px var(--navy);line-height:1}
 .logo .base{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff}
-.logo .spin{position:absolute;top:50%;left:50%;width:37px;height:37px;margin:-18.5px 0 0 -18.5px;border-radius:50%;background:var(--orange);animation:globe 2.4s linear infinite}
+.logo .spin-wrap{position:absolute;top:50%;left:50%;width:37px;height:37px;margin:-18.5px 0 0 -18.5px}
+.logo .spin{width:100%;height:100%;border-radius:50%;background:var(--orange);animation:globe 2.4s linear infinite}
 @keyframes globe{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
 
 /* Splash */
@@ -154,7 +155,7 @@ html,body{height:100%;margin:0;background:#0b1020;font-family:system-ui,-apple-s
 <div class="app">
 
   <div id="splash">
-    <div class="logo"><div class="text">BK</div><div class="base"></div><div class="spin"></div></div>
+    <div class="logo"><div class="text">BK</div><div class="base"></div><div class="spin-wrap"><div class="spin"></div></div></div>
   </div>
 
   <div id="login">
@@ -246,7 +247,7 @@ html,body{height:100%;margin:0;background:#0b1020;font-family:system-ui,-apple-s
     </div>
   </div>
 
-  <div id="ovl"><div class="logo"><div class="text">BK</div><div class="base"></div><div class="spin"></div></div></div>
+  <div id="ovl"><div class="logo"><div class="text">BK</div><div class="base"></div><div class="spin-wrap"><div class="spin"></div></div></div></div>
 
 </div>
 
@@ -307,8 +308,18 @@ if (Native && Native.PrivacyScreen) {
 }
 async function bioLogin(){
   if (!window.Capacitor || !window.Capacitor.isNativePlatform || !window.Capacitor.isNativePlatform()) { doLogin(true); return; } // preview fallback (not inside the built app)
+  var C = window.Capacitor;
+  var plugins = C.Plugins || {};
+  var BiometricAuth = plugins.BiometricAuth || plugins.NativeBiometric || plugins.BiometricAuthNative;
+  if (!BiometricAuth && typeof C.registerPlugin === "function") {
+    try { BiometricAuth = C.registerPlugin("BiometricAuth"); } catch(e){}
+  }
+  if (!BiometricAuth) {
+    alert("Biometric plugin not available on this build.\nPlugins found: "+(Object.keys(plugins).join(", ")||"(none)"));
+    doLogin(true);
+    return;
+  }
   try{
-    var BiometricAuth = (window.Capacitor.Plugins && window.Capacitor.Plugins.BiometricAuth) || window.Capacitor.registerPlugin("BiometricAuth");
     await BiometricAuth.authenticate({
       reason: "Login to BOK Digital",
       cancelTitle: "Cancel",
